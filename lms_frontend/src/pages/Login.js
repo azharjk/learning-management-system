@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import './Login.css';
 import dummyLogoImage from '../logo-dummy.png';
 
@@ -7,7 +9,7 @@ export default function Login() {
       <div className="login-container login-border-curve">
         <div className="login-lhs login-content-sized">
           <h3>Learning Management System</h3>
-          <p>View full source code on <a href="https://github.com">Github</a></p>
+          <p>View full source code on <a href="https://github.com/azharjk/learning-management-system">Github</a></p>
           <div className="login-lhs-logo">
             <img src={dummyLogoImage} alt="Logo" />
           </div>
@@ -16,7 +18,7 @@ export default function Login() {
           <form>
             <div className="login-rhs-input-field login-rhs-input-spacing">
               <label htmlFor="email">Email</label>
-              <input className="login-border-curve" type="text" name="email" placeholder="Enter your email" />
+              <input className="login-border-curve" type="email" name="email" placeholder="Enter your email" />
             </div>
             <div className="login-rhs-input-field login-rhs-input-spacing">
               <label htmlFor="password">Password</label>
@@ -24,7 +26,7 @@ export default function Login() {
             </div>
             <input className="login-rhs-submit-field" type="submit" value="Log in" />
           </form>
-          <p>Does not have account? <a href="#">here</a></p>
+          <p>Does not have account? <Link to="/register">here</Link></p>
         </div>
       </div>
     </div>
