@@ -9,15 +9,15 @@ export default function Register() {
         <form>
           <div className="reg-input-field reg-spacing">
             <label htmlFor="name">Name</label>
-            <input type="text" name="name" />
+            <input type="text" name="name" placeholder="Enter your full name" />
           </div>
           <div className="reg-input-field reg-spacing">
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" />
+            <input type="email" name="email" placeholder="Enter your email" />
           </div>
           <div className="reg-input-field reg-spacing">
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" />
+            <input type="password" name="password" placeholder="Enter your password" />
           </div>
           <input className="reg-submit-field" type="submit" value="Create Account" />
           <p>Already have an account? <Link to="/login">here</Link></p>
