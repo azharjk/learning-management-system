@@ -22,6 +22,23 @@ public class User {
   @Column(nullable = false)
   private String password;
 
+  public User() {
+
+  }
+
+  public User(String fullname, String email, String password) {
+    this.fullname = fullname;
+    this.email = email;
+    this.password = password;
+  }
+
+  public User(Long id, String fullname, String email, String password) {
+    this.id = id;
+    this.fullname = fullname;
+    this.email = email;
+    this.password = password;
+  }
+
   public Long getId() {
     return id;
   }
