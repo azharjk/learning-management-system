@@ -20,4 +20,8 @@ public class UserSeeder {
       userRepository.save(user);
     }
   }
+
+  public void seedSpecific(User user) {
+    userRepository.save(user);
+  }
 }
