@@ -1,5 +1,8 @@
 package com.azharjk.lms_backend.auth;
 
+import static java.util.Objects.isNull;
+
+import com.azharjk.lms_backend.user.User;
 import com.azharjk.lms_backend.auth.template.LoginTemplate;
 import com.azharjk.lms_backend.auth.template.ResponseTemplate;
 
@@ -19,9 +22,10 @@ public class AuthController {
 
   @PostMapping("/verify-user-login")
   public ResponseEntity<ResponseTemplate> verifyUserLogin(@RequestBody LoginTemplate template) {
-    if (authService.isAuthorize(template)) {
-      return new ResponseEntity<>(new ResponseTemplate("Successful Authentication", true), HttpStatus.OK);
+    User user = authService.authorize(template);
+    if (isNull(user)) {
+      return new ResponseEntity<>(new ResponseTemplate("Unsuccessful Authentication", false, null), HttpStatus.UNAUTHORIZED);
     }
-    return new ResponseEntity<>(new ResponseTemplate("Unsuccessful Authentication", false), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(new ResponseTemplate("Successful Authentication", true, user), HttpStatus.OK);
   }
 }

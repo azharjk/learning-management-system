@@ -14,11 +14,15 @@ public class AuthService {
   @Autowired
   private UserRepository userRepository;
 
-  public boolean isAuthorize(LoginTemplate template) {
+  public User authorize(LoginTemplate template) {
     Optional<User> user = userRepository.findByEmail(template.getEmail());
-    if (!user.isPresent()) {
-      return false;
+    if (user.isPresent()) {
+      User u = user.get();
+      if (u.getPassword().equals(template.getPassword())) {
+        return u;
+      }
+      return null;
     }
-    return user.get().getPassword().equals(template.getPassword());
+    return null;
   }
 }
