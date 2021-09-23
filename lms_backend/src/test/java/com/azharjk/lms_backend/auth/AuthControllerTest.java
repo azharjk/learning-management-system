@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.hamcrest.Matchers.is;
 
+import static org.hamcrest.core.IsNull.nullValue;
+
 import com.azharjk.lms_backend.auth.template.LoginTemplate;
 import com.azharjk.lms_backend.user.UserSeeder;
 import com.azharjk.lms_backend.user.User;
@@ -34,9 +36,12 @@ public class AuthControllerTest {
   @Autowired
   private UserSeeder userSeeder;
 
+  private User actualUser;
+
   @BeforeAll
   public void setUp() {
-    userSeeder.seedSpecific(new User(1L, "a", "a@a", "a"));
+    actualUser = new User(1L, "a", "a@a", "a");
+    userSeeder.seedSpecific(actualUser);
   }
 
   private String objectToJson(LoginTemplate template) throws Exception {
@@ -56,7 +61,9 @@ public class AuthControllerTest {
       .content(objectToJson(user)))
     .andExpect(status().isOk())
     .andExpect(jsonPath("$.message", is("Successful Authentication")))
-    .andExpect(jsonPath("$.verified", is(true)));
+    .andExpect(jsonPath("$.verified", is(true)))
+    .andExpect(jsonPath("$.user.email", is(actualUser.getEmail())))
+    .andExpect(jsonPath("$.user.fullname", is(actualUser.getFullname())));
   }
 
   @Test
@@ -69,7 +76,8 @@ public class AuthControllerTest {
       .content(objectToJson(user)))
     .andExpect(status().isUnauthorized())
     .andExpect(jsonPath("$.message", is("Unsuccessful Authentication")))
-    .andExpect(jsonPath("$.verified", is(false)));
+    .andExpect(jsonPath("$.verified", is(false)))
+    .andExpect(jsonPath("$.user", nullValue()));
   }
 
   @Test
@@ -82,6 +90,7 @@ public class AuthControllerTest {
       .content(objectToJson(user)))
     .andExpect(status().isUnauthorized())
     .andExpect(jsonPath("$.message", is("Unsuccessful Authentication")))
-    .andExpect(jsonPath("$.verified", is(false)));
+    .andExpect(jsonPath("$.verified", is(false)))
+    .andExpect(jsonPath("$.user", nullValue()));
   }
 }

@@ -1,7 +1,7 @@
 package com.azharjk.lms_backend.auth;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -24,33 +24,33 @@ public class AuthServiceTest {
   private UserRepository userRepository;
 
   @Test
-  public void isAuthorize_shouldReturnTrue_ifEmailExist() {
+  public void authorize_shouldReturnNotNull_ifEmailExist() {
     User user = new User(1L, "a", "a@a", "a");
     when(userRepository.findByEmail("a@a")).thenReturn(Optional.of(user));
 
-    assertTrue(authService.isAuthorize(new LoginTemplate("a@a", "a")));
+    assertNotNull(authService.authorize(new LoginTemplate("a@a", "a")));
   }
 
   @Test
-  public void isAuthorize_shouldReturnFalse_ifEmailNotExist() {
+  public void authorize_shouldReturnNull_ifEmailNotExist() {
     when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
-    assertFalse(authService.isAuthorize(new LoginTemplate("a@a", "a")));
+    assertNull(authService.authorize(new LoginTemplate("a@a", "a")));
   }
 
   @Test
-  public void isAuthorize_shouldReturnTrue_ifPasswordAndEmailMatches() {
+  public void authorize_shouldReturnNotNull_ifPasswordAndEmailMatches() {
     User user = new User(1L, "a", "a@a", "a");
     when(userRepository.findByEmail("a@a")).thenReturn(Optional.of(user));
 
-    assertTrue(authService.isAuthorize(new LoginTemplate("a@a", "a")));
+    assertNotNull(authService.authorize(new LoginTemplate("a@a", "a")));
   }
 
   @Test
-  public void isAuthorize_shouldReturnFalse_ifPasswordNotMatches() {
+  public void authorize_shouldReturnNull_ifPasswordNotMatches() {
     User user = new User(1L, "a", "a@a", "a");
     when(userRepository.findByEmail("a@a")).thenReturn(Optional.of(user));
 
-    assertFalse(authService.isAuthorize(new LoginTemplate("a@a", "b")));
+    assertNull(authService.authorize(new LoginTemplate("a@a", "b")));
   }
 }
