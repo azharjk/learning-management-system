@@ -5,7 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import static org.hamcrest.Matchers.is;
-
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNull.nullValue;
 
 import com.azharjk.lms_backend.auth.template.LoginTemplate;
@@ -62,6 +62,7 @@ public class AuthControllerTest {
     .andExpect(status().isOk())
     .andExpect(jsonPath("$.message", is("Successful Authentication")))
     .andExpect(jsonPath("$.verified", is(true)))
+    .andExpect(jsonPath("$.user.*", hasSize(2)))
     .andExpect(jsonPath("$.user.email", is(actualUser.getEmail())))
     .andExpect(jsonPath("$.user.fullname", is(actualUser.getFullname())));
   }

@@ -26,6 +26,7 @@ public class AuthController {
     if (isNull(user)) {
       return new ResponseEntity<>(new ResponseTemplate("Unsuccessful Authentication", false, null), HttpStatus.UNAUTHORIZED);
     }
-    return new ResponseEntity<>(new ResponseTemplate("Successful Authentication", true, user), HttpStatus.OK);
+    ResponseTemplate rt = new ResponseTemplate("Successful Authentication", true, user);
+    return new ResponseEntity<>(rt, HttpStatus.OK);
   }
 }
