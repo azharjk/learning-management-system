@@ -7,6 +7,8 @@ import {
 
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
 
 function App() {
   return (
@@ -19,9 +21,9 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/">
-            <h1>/ page</h1>
-          </Route>
+          <AuthenticatedRoute path="/">
+            <Dashboard />
+          </AuthenticatedRoute>
         </Switch>
       </div>
     </Router>

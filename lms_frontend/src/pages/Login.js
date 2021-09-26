@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import './Login.css';
 import dummyLogoImage from '../logo-dummy.png';
@@ -8,12 +9,27 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState(false);
+  const history = useHistory();
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
     if (!(email && password)) {
       setFormError(true);
       return;
+    }
+
+    try {
+      const result = await axios.post('http://localhost:8080/auth/verify-user-login', {email, password});
+      console.log(result);
+      if (result.data.verified) {
+        history.push({
+          pathname: '/',
+          state: { user: result.data.user, isAuthenticated: result.data.verified  }
+        });
+      }
+    }
+    catch (error) {
+      // TODO: Handle unverified thing
     }
   }
 
